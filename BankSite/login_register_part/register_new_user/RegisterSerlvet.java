@@ -8,7 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import used_by_all.DataHolder;
+import used_by_all.User;
+import userDAO.AddUserDAO;
 
 @WebServlet("/RegisterServlet")
 public class RegisterSerlvet extends HttpServlet {
@@ -16,9 +17,17 @@ public class RegisterSerlvet extends HttpServlet {
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
 
-		DataHolder dataHolder = createUser.addNew(request.getParameter("loginText"),
-				request.getParameter("passwordText"));
-		request.setAttribute("indexInfo", dataHolder.getMessage());
+		String login = request.getParameter("loginText"); 
+		String password = request.getParameter("passwordText");
+		
+		User user = new User();
+		
+		user.setName(login);
+		user.setPassword(password);
+		user.setMoney(0);
+		AddUserDAO.add(user);
+		
+		request.setAttribute("indexInfo", "User created");
 		requestDispatcher.forward(request, response);
 	}
 }

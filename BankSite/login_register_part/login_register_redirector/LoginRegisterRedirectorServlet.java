@@ -18,13 +18,14 @@ public class LoginRegisterRedirectorServlet extends HttpServlet {
 		 * If login button was clicked in index.jsp then go to LogInServlet. If register
 		 * button then go to RegisterServlet.
 		 */
-		if (request.getParameter("LoginButton") != null) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("LogInServlet");
-			requestDispatcher.forward(request, response);
-		} else if (request.getParameter("RegisterButton") != null) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("RegisterServlet");
-			requestDispatcher.forward(request, response);
+		RequestDispatcher requestDispatcher = null;
+
+		if ((boolean) request.getAttribute("redirectToRegister")) {
+			requestDispatcher = request.getRequestDispatcher("RegisterServlet");
+		} else {
+			requestDispatcher = request.getRequestDispatcher("LogInServlet");
 		}
+		requestDispatcher.forward(request, response);
 	}
 
 }

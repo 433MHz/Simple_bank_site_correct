@@ -9,25 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import used_by_all.DataHolder;
-import used_by_all.DataHolderUserExtended;
 import used_by_all.User;
+import userDAO.GetUserDAO;
 
 @WebServlet("/LogInServlet")
 public class LogInServlet extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		DataHolderUserExtended dataHolder = LogIn.logIn(request.getParameter("loginText"),
-				request.getParameter("passwordText")); // Get dataHolder object from LogIn
-		if (dataHolder.getIsDone()) {
-			session.setAttribute("user", dataHolder.getUser());
-			response.sendRedirect("bankAccount.jsp");
-		} else {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-			request.setAttribute("indexInfo", dataHolder.getMessage());
-			requestDispatcher.forward(request, response);
-		}
+		session.setAttribute("user", request.getAttribute("user"));
+		response.sendRedirect("bankAccount.jsp");
 	}
 }

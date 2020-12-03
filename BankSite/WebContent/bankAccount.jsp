@@ -1,5 +1,6 @@
 <%@page import="java.util.LinkedList"%>
 <%@page import= "used_by_all.User"%>
+<%@page import= "userDAO.GetUserDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
 <%!User user;%>
 <%
 	user = (User) session.getAttribute("user");
+	user = GetUserDAO.get(user.getName());
 %>
 
 
